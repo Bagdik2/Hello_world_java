@@ -6,7 +6,19 @@ public class HelloWorld {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		System.out.println("Первый метод(isWeekend(string)):");
+		isWeekend("Monday");
+		isWeekend("Sunday");
+		System.out.println("Второй метод(isWeekend(int)):");
+		System.out.println(isWeekend(0));
+		System.out.println(isWeekend(1));
+		System.out.println(isWeekend(7));
+		System.out.println("Третий метод(checkWeekend(string)):");
+		System.out.println(checkWeekend("Saturday"));
+		System.out.println(checkWeekend("Monday"));
+		System.out.println("Четвертый метод(determineGroup(int)):");
 		System.out.println(factorial(5));
+		
 
 	}
 	
@@ -62,8 +74,10 @@ public class HelloWorld {
 	}
 	
 	public static BigInteger factorial(int value) {
-		BigInteger output = BigInteger.valueOf(1);
-		for(int i = 1; i < value; i++) {
+		//Инициализация BigInt разными способами, сделал выбор в сторону чуть более короткой инициализации.
+		//BigInteger output = BigInteger.valueOf(1);
+		BigInteger output = BigInteger.ONE;
+		for(int i = 1; i <= value; i++) {
 			output = output.multiply(BigInteger.valueOf(i))  ; 
 		}
 		return output;
