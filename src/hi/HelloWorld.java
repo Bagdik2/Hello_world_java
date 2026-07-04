@@ -17,6 +17,17 @@ public class HelloWorld {
 		System.out.println(checkWeekend("Saturday"));
 		System.out.println(checkWeekend("Monday"));
 		System.out.println("Четвертый метод(determineGroup(int)):");
+		//Инициализируем объект класса для использования метода determineGroup(), потому как он нестатичный
+		HelloWorld gimmeGroup = new HelloWorld();
+		int group = gimmeGroup.determineGroup(9);
+		System.out.println(group);
+		group = gimmeGroup.determineGroup(16);
+		System.out.println(group);
+		group = gimmeGroup.determineGroup(25);
+		System.out.println(group);
+		group = gimmeGroup.determineGroup(0);
+		System.out.println(group);
+		System.out.println("Пятый метод(factorial(int)):");
 		System.out.println(factorial(5));
 		
 
