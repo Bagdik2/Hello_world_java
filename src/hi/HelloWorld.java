@@ -16,9 +16,15 @@ public class HelloWorld {
 		int inputEnd = 10;
 		//Вызов второго метода
 		System.out.println(Arrays.toString(getSubArrayBetween(inputArray, inputStart, inputEnd)));
+		//Инициализация массивов для третьего метода
+		int[] inputArray3_1_1 = {1,5,2,17};
+		int[] inputArray3_1_2 = {14,16,3};
 		//Вызов третьего метода, первая задача
-		
+		System.out.println("[" + getCentralElement1(inputArray3_1_1)[0] + " ," + getCentralElement1(inputArray3_1_1)[1] + "]");
+		System.out.println("[" + getCentralElement1(inputArray3_1_2)[0] + "]");
 		//Вызов третьего метода, вторая задача
+		System.out.println(Arrays.toString(getCentralElement2(inputArray3_1_1)));
+		System.out.println(Arrays.toString(getCentralElement2(inputArray3_1_2)));
 
 	}
 	
@@ -68,8 +74,24 @@ public class HelloWorld {
 			return returnArray;
 		} else {
 			int[] returnArray = new int[2];
-			returnArray[0] = array[array.length / 2];
-			returnArray[1] = array[(array.length / 2) -1];
+			returnArray[0] = array[(array.length / 2) -1];
+			returnArray[1] = array[array.length / 2];
+			//Чётный, возвращаем центральных 2 элемента
+			return returnArray;
+		}
+	}
+	
+	public static int[] getCentralElement2(int[] array) {
+		int center = array.length / 2;
+		//Проверяем чётный массив или нет
+		if(array.length % 2 == 1) {
+			int[] returnArray = new int[1];
+			returnArray = Arrays.copyOfRange(array, center, center + 1);
+			//Нечётный, возвращаем центральный элемент
+			return returnArray;
+		} else {
+			int[] returnArray = new int[2];
+			returnArray = Arrays.copyOfRange(array, center -1, center + 1);
 			//Чётный, возвращаем центральных 2 элемента
 			return returnArray;
 		}
