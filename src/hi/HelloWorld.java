@@ -19,13 +19,27 @@ public class HelloWorld {
 		//Инициализация массивов для третьего метода
 		int[] inputArray3_1_1 = {1,5,2,17};
 		int[] inputArray3_1_2 = {14,16,3};
-		//Вызов третьего метода, первая задача
-		System.out.println("[" + getCentralElement1(inputArray3_1_1)[0] + " ," + getCentralElement1(inputArray3_1_1)[1] + "]");
-		System.out.println("[" + getCentralElement1(inputArray3_1_2)[0] + "]");
+		//Вызов третьего метода и перевод его в переменную для удобства использования, первая задача
+		int[] outputArrayMain3_1 = getCentralElement1(inputArray3_1_1);
+		int[] outputArrayMain3_2 = getCentralElement1(inputArray3_1_2);
+		printArray(outputArrayMain3_1);
+		printArray(outputArrayMain3_2);
+		//Топорный вариант вывода
+		//System.out.println("[" + getCentralElement1(inputArray3_1_2)[0] + "]");
 		//Вызов третьего метода, вторая задача
 		System.out.println(Arrays.toString(getCentralElement2(inputArray3_1_1)));
 		System.out.println(Arrays.toString(getCentralElement2(inputArray3_1_2)));
-
+		//Инициализация массивов для четвёртого метода
+		int[] inputArray4_1_1 = {1,3,7,5};
+		int[] inputArray4_1_2 = {8,4,2,4};
+		//Вызов четвёртого метода, первая задача
+		System.out.println(Arrays.toString(mergeAndSort(inputArray4_1_1, inputArray4_1_2)));
+		//System.out.println(Arrays.toString(mergeAndSort(inputArray4_1_2)));
+		//Вызов четвёртого метода, вторая задача
+		System.out.println(Arrays.toString(mergeAndSortArrays(inputArray4_1_1, inputArray4_1_2)));
+		//Инициализация и вызов пятого метода
+		int[] inputArray5 = {3,5,20,8,7,3,100};
+		printOddNumbers(inputArray5);
 	}
 	
 	public static void printArray(int[] numbers) {
@@ -94,6 +108,78 @@ public class HelloWorld {
 			returnArray = Arrays.copyOfRange(array, center -1, center + 1);
 			//Чётный, возвращаем центральных 2 элемента
 			return returnArray;
+		}
+	}
+	
+	public static int[] mergeAndSort(int[] first, int[] second) {
+		int firstSize = first.length;
+		int secondSize = second.length;
+		int returnSize = firstSize + secondSize;
+		int[] returnArray = new int[returnSize];
+		for(int i = 0; i < first.length; i++) {
+			returnArray[i] = first[i];
+		}
+		for(int i = firstSize; i < returnSize; i++) {
+			int j = i - firstSize;
+			returnArray[i] = second[j];
+		}
+
+        for (int i = 0; i < returnArray.length - 1; i++) {
+            for (int j = 0; j < returnArray.length - i - 1; j++) {
+                if (returnArray[j] > returnArray[j + 1]) {
+                    // Меняем элементы местами
+                    int temp = returnArray[j];
+                    returnArray[j] = returnArray[j + 1];
+                    returnArray[j + 1] = temp;
+                }
+            }
+        }
+
+        return returnArray;
+	}
+	
+	public static int[] mergeAndSortArrays(int[] first, int[] second) {
+		int firstSize = first.length;
+		int secondSize = second.length;
+		int returnSize = firstSize + secondSize;
+		int[] returnArray = new int[returnSize];
+		for(int i = 0; i < first.length; i++) {
+			returnArray[i] = first[i];
+		}
+		for(int i = firstSize; i < returnSize; i++) {
+			int j = i - firstSize;
+			returnArray[i] = second[j];
+		}
+		Arrays.sort(returnArray);
+		
+		return returnArray;
+	}
+	
+	public static void printOddNumbers(int[] arr) {
+		int counter = 0;
+		//Ищем размер выводимого массива
+		for(int i = 0; i < arr.length; i++) {
+			if (arr[i] % 2 == 1) {
+				counter ++;
+			}
+		}
+		int[] returnArray = new int[counter];
+		int arrayPointer = 0;
+		//Заполняем выводной массив
+		for(int i = 0; i < arr.length; i++) {
+			if (arr[i] % 2 == 1) {
+				returnArray[arrayPointer] = arr[i];
+				arrayPointer++;
+			}
+		}
+		//Упрощённая отрисовка массива, не как в примере
+		//printArray(returnArray);
+		//Отрисовка массива как в примере
+		for(int i = 0; i < returnArray.length; i ++) {
+			System.out.print(returnArray[i]);
+			if(i < returnArray.length - 1) {
+				System.out.print(',');
+			}
 		}
 	}
 
