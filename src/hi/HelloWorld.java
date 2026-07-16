@@ -9,17 +9,24 @@ public class HelloWorld {
 		//Инициализация массива для первого метода(printArray(int[]))
 		int[] array = {1,2,3,4,5};
 		//Вызов первого метода
+		System.out.println("Метод 1:");
 		printArray(array);
 		//Инициализация переменных для второго метода(getSubArrayBetween)
 		int[] inputArray = {1,3,5,6,9,11,24};
 		int inputStart = 4;
 		int inputEnd = 10;
+		int[] inputArray1 = {1,3,1,32,9,7,7,11};
+		int inputStart1 = 3;
+		int inputEnd1 = 7;
 		//Вызов второго метода
+		System.out.println("Метод 2:");
 		System.out.println(Arrays.toString(getSubArrayBetween(inputArray, inputStart, inputEnd)));
+		System.out.println(Arrays.toString(getSubArrayBetween(inputArray1, inputStart1, inputEnd1)));
 		//Инициализация массивов для третьего метода
 		int[] inputArray3_1_1 = {1,5,2,17};
 		int[] inputArray3_1_2 = {14,16,3};
 		//Вызов третьего метода и перевод его в переменную для удобства использования, первая задача
+		System.out.println("Метод 3.1:");
 		int[] outputArrayMain3_1 = getCentralElement1(inputArray3_1_1);
 		int[] outputArrayMain3_2 = getCentralElement1(inputArray3_1_2);
 		printArray(outputArrayMain3_1);
@@ -27,17 +34,21 @@ public class HelloWorld {
 		//Топорный вариант вывода
 		//System.out.println("[" + getCentralElement1(inputArray3_1_2)[0] + "]");
 		//Вызов третьего метода, вторая задача
+		System.out.println("Метод 3.2:");
 		System.out.println(Arrays.toString(getCentralElement2(inputArray3_1_1)));
 		System.out.println(Arrays.toString(getCentralElement2(inputArray3_1_2)));
 		//Инициализация массивов для четвёртого метода
 		int[] inputArray4_1_1 = {1,3,7,5};
 		int[] inputArray4_1_2 = {8,4,2,4};
 		//Вызов четвёртого метода, первая задача
+		System.out.println("Метод 4.1:");
 		System.out.println(Arrays.toString(mergeAndSort(inputArray4_1_1, inputArray4_1_2)));
 		//System.out.println(Arrays.toString(mergeAndSort(inputArray4_1_2)));
 		//Вызов четвёртого метода, вторая задача
+		System.out.println("Метод 4.2:");
 		System.out.println(Arrays.toString(mergeAndSortArrays(inputArray4_1_1, inputArray4_1_2)));
 		//Инициализация и вызов пятого метода
+		System.out.println("Метод 5:");
 		int[] inputArray5 = {3,5,20,8,7,3,100};
 		printOddNumbers(inputArray5);
 	}
@@ -62,7 +73,7 @@ public class HelloWorld {
 		int counter = 0;
 		//Ищем размер выводимого массива
 		for(int i = 0; i < numbers.length; i++) {
-			if (numbers[i] >= 4 && numbers[i] <= 10) {
+			if (numbers[i] >= start && numbers[i] <= end) {
 				counter ++;
 			}
 		}
@@ -71,7 +82,7 @@ public class HelloWorld {
 		int arrayPointer = 0;
 		//Заполняем выводной массив
 		for(int i = 0; i < numbers.length; i++) {
-			if (numbers[i] >= 4 && numbers[i] <= 10) {
+			if (numbers[i] >= start && numbers[i] <= end) {
 				returnArray[arrayPointer] = numbers[i];
 				arrayPointer++;
 			}
