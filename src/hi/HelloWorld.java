@@ -1,16 +1,108 @@
 package hi;
 
 public class HelloWorld {
-    //3 задача, главный класс
+    
+	enum Direction {
+		UP, DOWN, LEFT, RIGHT
+	}
+	//3 задача, главный класс
 	public static class Robot {
-		//turnLeft(), turnRight(), stepForward(), getX(), getY(), getDirection()
-		enum Direction {
-			RIGHT, LEFT, UP, DOWN
+		
+		int posX;
+		int posY;
+		Direction lookingAt;
+		
+		public Robot() {
+			this.posX = 0;
+			this.posY = 0;
+			this.lookingAt = Direction.UP;
 		}
-		//3 задача, главный метод
-		public static void moveRobot(Robot robot, int toX, int toY) {
-			
+		
+		public Robot(int xxx, int yyy) {
+			this.posX = xxx;
+			this.posY = yyy;
+			this.lookingAt = Direction.UP;
 		}
+		
+		public Robot(int xxx, int yyy, Direction look) {
+			this.posX = xxx;
+			this.posY = yyy;
+			this.lookingAt = Direction.UP;
+		}
+		
+		private void turnLeft() {
+			switch(this.lookingAt) {
+			case UP:
+				this.lookingAt = Direction.LEFT;
+				break;
+			case RIGHT:
+				this.lookingAt = Direction.UP;
+				break;
+			case DOWN:
+				this.lookingAt = Direction.RIGHT;
+				break;
+			case LEFT:
+				this.lookingAt = Direction.DOWN;
+				break;
+			default:
+				break;
+			}
+			System.out.println("Turned left");
+		}
+		
+		private void turnRight() {
+			switch(this.lookingAt) {
+			case UP:
+				this.lookingAt = Direction.RIGHT;
+				break;
+			case RIGHT:
+				this.lookingAt = Direction.DOWN;
+				break;
+			case DOWN:
+				this.lookingAt = Direction.LEFT;
+				break;
+			case LEFT:
+				this.lookingAt = Direction.UP;
+				break;
+			default:
+				break;
+			}
+			System.out.println("Turned right");
+		}
+		
+		private void stepForward() {
+			switch (this.lookingAt) {
+			case UP:
+				this.posY++;
+				break;
+			case DOWN:
+				this.posY--;
+				break;
+			case LEFT:
+				this.posX--;
+				break;
+			case RIGHT:
+				this.posX++;
+				break;
+
+			default:
+				break;
+			}
+			System.out.println("Stepped forward");
+		}
+		
+		private int getX() {
+			return this.posX;
+		}
+		
+		private int getY() {
+			return this.posY;
+		}
+		
+		private Direction getDirection() {
+			return this.lookingAt;
+		}
+
 	}
 	
 	//Класс Cat 1-й задачи
@@ -20,6 +112,7 @@ public class HelloWorld {
 		}
 
 	}
+	
 	//Класс Dog 1-й задачи
 	public static class Dog {
 		public void sayHello() {
@@ -79,6 +172,51 @@ public class HelloWorld {
 		}
 		return returnString;
 	}
+	
+	//3 задача, главный метод
+	public static void moveRobot(Robot robot, int toX, int toY) {
+		//robot.turnLeft();
+		int currentX = robot.getX();
+		int currentY = robot.getY();
+		Direction dir = robot.getDirection();
+		
+		if(robot.getX() < toX) {
+			while(robot.getDirection() != Direction.RIGHT) {
+				robot.turnRight();
+			}
+			while(robot.getX() < toX) {
+				robot.stepForward();
+			}
+		}
+		
+		if(robot.getX() > toX) {
+			while(robot.getDirection() != Direction.LEFT) {
+				robot.turnLeft();
+			}
+			while(robot.getX() > toX) {
+				robot.stepForward();
+			}
+		}
+		
+		if(robot.getY() < toY) {
+			while(robot.getDirection() != Direction.UP) {
+				robot.turnRight();
+			}
+			while(robot.getY() < toY) {
+				robot.stepForward();
+			}
+		}
+		
+		if(robot.getY() > toY) {
+			while(robot.getDirection() != Direction.DOWN) {
+				robot.turnLeft();
+			}
+			while(robot.getY() > toY) {
+				robot.stepForward();
+			}
+		}
+		
+	}
 
 	public static void main(String[] args) {
 		//Выполнение 1-й задачи
@@ -100,7 +238,16 @@ public class HelloWorld {
 		System.out.println("SUNDAY это что за день?");
 		System.out.println(getRusName(isWeekendDay2));
 		//Выполнение 3-й задачи
-		System.out.println("Задача 3, метод 1:");
+		System.out.println("Задача 3:");
+		//Инициализация объектов и переменных 3 задачи
+		Robot robert = new Robot();
+		System.out.println("Создан робот, x робота: " + robert.getX() + "; y робота:" + robert.getY());
+		moveRobot(robert, 3, 0);
+		System.out.println("x робота: " + robert.getX() + "; y робота:" + robert.getY());
+		Robot robert1 = new Robot(-3, 7);
+		System.out.println("Создан робот, x робота: " + robert1.getX() + "; y робота:" + robert1.getY());
+		moveRobot(robert1, -1, 6);
+		System.out.println("x робота: " + robert1.getX() + "; y робота:" + robert1.getY());
 	}
 
 }
