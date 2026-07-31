@@ -10,7 +10,12 @@ public class HelloWorld {
 		student.study();
 		javaStudent.study();
 		lazyStudent.study();
-
+		ComplexNumber complexNumber = new ComplexNumber(1.33D, 1.66D);
+		ComplexNumber complexNumber2 = new ComplexNumber(1.33D, 1.66D);
+		
+		System.out.println(complexNumber.equals(complexNumber2));
+		System.out.println(complexNumber.hashCode());
+		System.out.println(complexNumber2.hashCode());
 	}
 	
 	//1 задание - расширяющий метод
