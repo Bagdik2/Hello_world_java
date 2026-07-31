@@ -1,10 +1,14 @@
 package hi;
 
 public class Student {
-	String studying;
+	private String studying;
 	
-	public static void study() {
-		System.out.println("Haii, my ist workling, kall me later");
+	public Student() {
+		studying = "Haii, my ist workling, kall me later!";
+	}
+	
+	public void study() {
+		System.out.println(this.studying);
 	}
 
 }
