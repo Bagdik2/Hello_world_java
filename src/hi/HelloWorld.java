@@ -14,7 +14,7 @@ public class HelloWorld {
 				"Грустно. Но грустить не очем, веселимся!"
 		};
 		String[] spamKeywords = {
-				"Лавировали", "Заработай", "Купи", "Продай"
+				"Лавировали", "Заработай", "Купи", "Продай", "Покупай"
  		};
 		
 		TextAnalyzer spam = new SpamAnalyzer(spamKeywords);
