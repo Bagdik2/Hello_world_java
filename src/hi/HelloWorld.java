@@ -18,6 +18,26 @@ public class HelloWorld {
 	
 	class SpamAnalyzer implements TextAnalyzer {
 		
+		private String[] keywords;
+		
+		public SpamAnalyzer (String[] keywords) {
+			
+			this.keywords = keywords;
+		}
+		
+		@Override
+		public Label processText(String text) {
+			
+			String lowerText = text.toLowerCase();
+			
+			for (String keyword : keywords) {
+				if (lowerText.contains(keyword.toLowerCase())) {
+					return Label.SPAM;
+				}
+			}
+			
+			return Label.OK;
+		}
 	}
 	
 	class NegativeTextAnalyzer implements TextAnalyzer {
