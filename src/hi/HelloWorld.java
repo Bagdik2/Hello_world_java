@@ -42,6 +42,20 @@ public class HelloWorld {
 	
 	class NegativeTextAnalyzer implements TextAnalyzer {
 		
+		private static final String NEGATIVE_SMILE = ":(";
+		
+		public NegativeTextAnalyzer() {
+			
+		}
+		
+		@Override
+		public Label processText(String text) {
+			if (text.contains(NEGATIVE_SMILE)) {
+				return Label.NEGATIVE_TEXT;
+			}
+			
+			return Label.OK;
+		}
 	}
 	
 	class TooLongTextAnalyzer implements TextAnalyzer {
