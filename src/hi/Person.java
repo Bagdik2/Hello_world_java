@@ -1,6 +1,19 @@
 package hi;
 
-public interface Person {
-	public static final String firstName;
-	public static final String lastName;
+public class Person {
+	private String firstName;
+	private String lastName;
+	
+	Person(String fn, String ln) {
+		this.firstName = fn;
+		this.lastName = ln;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
 }
