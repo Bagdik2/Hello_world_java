@@ -1,0 +1,10 @@
+# Compiled Java classes (never commit these)
+*.class
+*.jar
+*.war
+
+# Eclipse settings
+.settings/
+.metadata/
+.classpath
+.project
