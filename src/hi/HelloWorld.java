@@ -9,8 +9,8 @@ public class HelloWorld {
 
 	public static void main(String[] args) {
 		//Создаём два сета из задачи
-		Set<Integer> set1 = new TreeSet<>(Set.of(0, 1, 2));
-		Set<Integer> set2 = new TreeSet<>(Set.of(1, 2, 3));
+		Set<Integer> set1 = new TreeSet<>(Set.of(1, 2, 3));
+		Set<Integer> set2 = new TreeSet<>(Set.of(0, 1, 2));
 		//Выводим сеты в консоль для наглядности
 		System.out.println(set1 + " " + set2);
 		
@@ -20,11 +20,11 @@ public class HelloWorld {
 	
 	public static <T> Set<T> symmetricDifference(Set<? extends T> set1, Set<? extends T> set2) {
 		//Ищем разность 2 сета с 1-м
-		Set<T> diff = new TreeSet<>(set2);
-		diff.removeAll(set1);
+		Set<T> diff = new TreeSet<>(set1);
+		diff.removeAll(set2);
 		//Ищем разность 1 сета со 2-м
-		Set<T> diff1 = new TreeSet<>(set1);
-		diff1.removeAll(set2);
+		Set<T> diff1 = new TreeSet<>(set2);
+		diff1.removeAll(set1);
 		//Объёдиняем, так как TreeSet - он автоматически сортируется
 		diff.addAll(diff1);
 		//Выводим готовый сет из метода
