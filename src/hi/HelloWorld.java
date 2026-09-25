@@ -44,6 +44,9 @@ public class HelloWorld {
 		nestedJSON(mapper, json);
 		nestedJSON2(mapper, json);
 		
+		String jsonTest = "{\"id\": 2, \"name\": \"faye\", \"email\": {\"email\": \"faye@reqres.in\"}}";
+		deserialization(mapper, jsonTest);
+		
 	}
 	
 	public static void doPretty(@SuppressWarnings("exports") ObjectMapper mapper) {
@@ -84,6 +87,7 @@ public class HelloWorld {
             		new TypeReference<List<User>>() {});
             System.out.println(users.size());        // 2
             System.out.println(users.get(0).getName()); // "Anna"
+            System.out.println(users.get(0).getEmail()); // "Anna"
             
 		} catch (Exception e) {
 			System.out.println("Caught an error, message:" + e.getMessage());

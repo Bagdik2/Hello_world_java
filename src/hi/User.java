@@ -34,6 +34,12 @@ public class User {
     public void setName(String fn) { this.name = fn; }
     public String getEmail() { return email; }
     public void setEmail(String e) { this.email = e; }
+    @JsonProperty("email")
+    public void setEmailFromNested(java.util.Map<String, Object> nested) {
+        if (nested != null && nested.get("email") != null) {
+            this.email = nested.get("email").toString();
+        }
+    }
     @Override
     public String toString() {
     	return "User{id=" + id + ", name='" + name + "', email='" + email + "'}";
