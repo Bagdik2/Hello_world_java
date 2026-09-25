@@ -1,6 +1,9 @@
 package hi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // Модель для JSON:
@@ -35,11 +38,23 @@ public class User {
     public String getEmail() { return email; }
     public void setEmail(String e) { this.email = e; }
     @JsonProperty("email")
-    public void setEmailFromNested(java.util.Map<String, Object> nested) {
-        if (nested != null && nested.get("email") != null) {
-            this.email = nested.get("email").toString();
+    public void setEmailFromAny(Object email) {
+        if (email == null) {
+            return;
+        }
+        if (email instanceof String s) {
+            this.email = s;
+        } else if (email instanceof Map<?, ?> map) {
+            Object inner = map.get("email");
+            if (inner != null) {
+                this.email = inner.toString();
+            }
+        } else {
+            // на всякий случай — если прилетит число или boolean
+            this.email = email.toString();
         }
     }
+    
     @Override
     public String toString() {
     	return "User{id=" + id + ", name='" + name + "', email='" + email + "'}";
