@@ -18,9 +18,9 @@ public class HelloWorld {
 
 	public static void main(String[] args) {
 		//Маппер, переиспользуемый во всей программе
-        ObjectMapper mapper = new ObjectMapper();
         
-        doPretty(mapper);
+        
+        doPretty(Json.MAPPER);
 
         String json0 = "{\"id\": 1, \"name\": \"Anna\", \"email\": \"anna@test.com\"}";
      // JSON с массивом — List<User>
@@ -32,20 +32,20 @@ public class HelloWorld {
 		    new User(2, "Ivan", "ivan@test.com")
 		);
         
-		serialization(mapper, user);
-		serializationPretty(mapper, user);
-		serializationList(mapper, users);
-		deserialization(mapper, json0);
-		deserializationArray(mapper, jsonArray);
-		deserializationMap(mapper, json0);
+		serialization(Json.MAPPER, user);
+		serializationPretty(Json.MAPPER, user);
+		serializationList(Json.MAPPER, users);
+		deserialization(Json.MAPPER, json0);
+		deserializationArray(Json.MAPPER, jsonArray);
+		deserializationMap(Json.MAPPER, json0);
 		
 		String json = 
 				 "{\"status\": \"success\",\"data\": { \"id\": 42, \"name\": \"Anna\" },\"meta\": { \"total\": 100, \"page\": 1 }}";
-		nestedJSON(mapper, json);
-		nestedJSON2(mapper, json);
+		nestedJSON(Json.MAPPER, json);
+		nestedJSON2(Json.MAPPER, json);
 		
 		String jsonTest = "{\"id\": 2, \"name\": \"faye\", \"email\": {\"email\": \"faye@reqres.in\"}}";
-		deserialization(mapper, jsonTest);
+		deserialization(Json.MAPPER, jsonTest);
 		
 	}
 	
