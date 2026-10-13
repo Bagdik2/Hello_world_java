@@ -1,6 +1,5 @@
 package hi;
 
-import javax.management.RuntimeErrorException;
 
 public class CreateUserRequest {
 	
@@ -22,6 +21,5 @@ public class CreateUserRequest {
 		} catch (Exception e) {
 			throw new RuntimeException("Ошибка сериализации CreateUserRequest:\n", e);
 		}
-		return null;
 	}
 }

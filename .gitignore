@@ -9,4 +9,5 @@
 .classpath
 .project
 bin/
+target/classes/
 /target/
