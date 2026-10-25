@@ -17,33 +17,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class HelloWorld {
 
 	public static void main(String[] args) {
-		// Маппер, переиспользуемый во всей программе
-
+		// Маппер, переиспользуемый во всей программе, заставляем его делать "красиво"
 		doPretty(Json.MAPPER);
 
-		String json0 = "{\"id\": 1, \"name\": \"Anna\", \"email\": \"anna@test.com\"}";
-		// JSON с массивом — List<User>
-		String jsonArray = "[{\"id\": 1, \"name\": \"Anna\"}, {\"id\": 2, \"name\": \"Ivan\"}]";
-
-		User user = new User(1, "Anna", "anna@test.com");
-		List<User> users = List.of(new User(1, "Anna", "anna@test.com"), new User(2, "Ivan", "ivan@test.com"));
-
-		serialization(Json.MAPPER, user);
-		serializationPretty(Json.MAPPER, user);
-		serializationList(Json.MAPPER, users);
-		deserialization(Json.MAPPER, json0);
-		deserializationArray(Json.MAPPER, jsonArray);
-		deserializationMap(Json.MAPPER, json0);
-
-		String json = "{\"status\": \"success\",\"data\": { \"id\": 42, \"name\": \"Anna\" },\"meta\": { \"total\": 100, \"page\": 1 }}";
-		nestedJSON(Json.MAPPER, json);
-		nestedJSON2(Json.MAPPER, json);
-
-		String jsonTest = "{\"id\": 2, \"name\": \"faye\", \"email\": {\"email\": \"faye@reqres.in\"}}";
-		deserialization(Json.MAPPER, jsonTest);
-
 		System.out.println("\n___Задача1 : Практика — десериализация JSON___\n");
-
 		TestUserDeserialization test = new TestUserDeserialization();
 
 		try {
@@ -54,26 +31,10 @@ public class HelloWorld {
 
 		System.out.println("\n___Задача2 : Практика — сериализация запроса___\n");
 		System.out.println(CreateUserRequest.buildRequestBody("Anna", "Engineer"));
-		
+
 		System.out.println("\n___Задача3 : Практика — JsonNode для вложенного JSON___\n");
 		String nestedApiJson = "{\"data\": {\"id\": 2, \"email\": \"a@b.com\"}, \"support\": {\"url\": \"https://...\", \"text\": \"To keep...\"}}";
-		try {
-			JsonNode tree = Json.MAPPER.readTree(nestedApiJson);
-			
-			int id = tree.path("data").path("id").asInt();
-			String email = tree.path("data").path("email").asText();
-			String url = tree.path("support").path("url").asText();
-			
-			
-			System.out.println("data.id (как int): " + id + "\ndata.email (как String):" + email + "\nsupport.url (как String): " + url);
-			
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println(nestedJSON(Json.MAPPER, nestedApiJson));
 
 	}
 
@@ -93,121 +54,24 @@ public class HelloWorld {
 		JsonMapper.builder().enable(SerializationFeature.INDENT_OUTPUT);
 	}
 
-	public static void deserialization(@SuppressWarnings("exports") ObjectMapper mapper, String json) {
-		System.out.println("___Десериализация___\n");
-		// Строку JSON — объект User
+	public static String nestedJSON(@SuppressWarnings("exports") ObjectMapper mapper, String json) {
 
 		try {
-			User user = mapper.readValue(json, User.class);
-			System.out.println(user.getName()); // "Anna"
-			System.out.println(user.getEmail()); // "anna@test.com"
-		} catch (Exception e) {
-			System.out.println("Caught an error, message:" + e.getMessage());
-		}
+			JsonNode tree = mapper.readTree(json);
 
-	}
+			int id = tree.path("data").path("id").asInt();
+			String email = tree.path("data").path("email").asText();
+			String url = tree.path("support").path("url").asText();
 
-	public static void deserializationArray(@SuppressWarnings("exports") ObjectMapper mapper, String jsonArray) {
-		System.out.println("___Десериализация Array___\n");
-		try {
+			return ("data.id (как int): " + id + "\ndata.email (как String):" + email + "\nsupport.url (как String): "
+					+ url);
 
-			List<User> users = mapper.readValue(jsonArray, new TypeReference<List<User>>() {
-			});
-			System.out.println(users.size()); // 2
-			System.out.println(users.get(0).getName()); // "Anna"
-			System.out.println(users.get(0).getEmail()); // "Anna"
-
-		} catch (Exception e) {
-			System.out.println("Caught an error, message:" + e.getMessage());
-		}
-	}
-
-	public static void deserializationMap(@SuppressWarnings("exports") ObjectMapper mapper, String json) {
-		System.out.println("___Десериализация Map___\n");
-		try {
-			// JSON — Map (когда структура неизвестна заранее)
-			Map<String, Object> map = mapper.readValue(json, new TypeReference<Map<String, Object>>() {
-			});
-			System.out.println(map.get("name"));
-			System.out.println(map.get("id"));
-			// 1 (Integer)
-		} catch (Exception e) {
-			System.out.println("Caught an error, message:" + e.getMessage());
-		}
-	}
-
-	public static void serialization(@SuppressWarnings("exports") ObjectMapper mapper, User user) {
-		// Объект — JSON строку
-		System.out.println("___Сериализация___\n");
-		try {
-			String json = mapper.writeValueAsString(user);
-			// {"id":1,"name":"Anna","email":"anna@test.com"}
-			System.out.println(json);
-
-		} catch (Exception e) {
+		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void serializationPretty(@SuppressWarnings("exports") ObjectMapper mapper, User user) {
-		System.out.println("___Сериализация карасивая___\n");
-		try {
-			// С красивым форматированием (для логов и отладки)
-			String pretty = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
-			// {
-			// "id" : 1,
-			// "name" : "Anna",
-			// "email" : "anna@test.com"
-			// }
-
-			// Список объектов — JSON
-			System.out.println(pretty);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-
-	public static void serializationList(@SuppressWarnings("exports") ObjectMapper mapper, List<User> users) {
-		System.out.println("___Сериализация список___\n");
-		try {
-			String jsonArray = mapper.writeValueAsString(users);
-			System.out.println(jsonArray);
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("Ошибка: " + e.getMessage());
-		}
-	}
-
-	public static void nestedJSON(@SuppressWarnings("exports") ObjectMapper mapper, String json) {
-		System.out.println("___Вложенный JSON v1___\n");
-		try {
-			ApiResponse response = mapper.readValue(json, ApiResponse.class);
-			String status = response.getStatus(); // "success"
-			String name = response.getData().getName(); // "Anna"
-			int total = response.getMeta().getTotal(); // 100
-			System.out.println("Status: " + status + "\nName: " + name + "\nTotal: " + total + "\n");
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("Ошибка: " + e.getMessage());
-		}
-
-	}
-
-	public static void nestedJSON2(@SuppressWarnings("exports") ObjectMapper mapper, String json) {
-		// Вариант 2 — через JsonNode (дерево, без POJO)
-		System.out.println("___Вложенный JSON v2___\n");
-		try {
-			JsonNode root = mapper.readTree(json);
-			String status = root.get("status").asText(); // "success"
-			String name = root.get("data").get("name").asText(); // "Anna"
-			int total = root.get("meta").get("total").asInt(); // 100
-			System.out.println("Status: " + status + "\nName: " + name + "\nTotal: " + total + "\n");
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println("Ошибка: " + e.getMessage());
+			return e.getMessage();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			return e.getMessage();
 		}
 	}
 

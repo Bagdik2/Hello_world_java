@@ -21,8 +21,6 @@ class TestUserDeserialization {
 		assertTrue(createdUser.getId() == 2, "ID совпадает");
 
 		assertEquals("faye", createdUser.getName(), "Имя совпадает");
-
-		// fail("Not yet implemented");
 	}
 
 }
