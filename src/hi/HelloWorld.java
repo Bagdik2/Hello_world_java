@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -40,6 +41,39 @@ public class HelloWorld {
 
 		String jsonTest = "{\"id\": 2, \"name\": \"faye\", \"email\": {\"email\": \"faye@reqres.in\"}}";
 		deserialization(Json.MAPPER, jsonTest);
+
+		System.out.println("\n___Задача1 : Практика — десериализация JSON___\n");
+
+		TestUserDeserialization test = new TestUserDeserialization();
+
+		try {
+			test.testUserDeserialization();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		System.out.println("\n___Задача2 : Практика — сериализация запроса___\n");
+		System.out.println(CreateUserRequest.buildRequestBody("Anna", "Engineer"));
+		
+		System.out.println("\n___Задача3 : Практика — JsonNode для вложенного JSON___\n");
+		String nestedApiJson = "{\"data\": {\"id\": 2, \"email\": \"a@b.com\"}, \"support\": {\"url\": \"https://...\", \"text\": \"To keep...\"}}";
+		try {
+			JsonNode tree = Json.MAPPER.readTree(nestedApiJson);
+			
+			int id = tree.path("data").path("id").asInt();
+			String email = tree.path("data").path("email").asText();
+			String url = tree.path("support").path("url").asText();
+			
+			
+			System.out.println("data.id (как int): " + id + "\ndata.email (как String):" + email + "\nsupport.url (как String): " + url);
+			
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -110,7 +144,7 @@ public class HelloWorld {
 			// {"id":1,"name":"Anna","email":"anna@test.com"}
 			System.out.println(json);
 
-		} catch (JsonProcessingException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -142,6 +176,7 @@ public class HelloWorld {
 			System.out.println(jsonArray);
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("Ошибка: " + e.getMessage());
 		}
 	}
 
@@ -172,6 +207,7 @@ public class HelloWorld {
 
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("Ошибка: " + e.getMessage());
 		}
 	}
 

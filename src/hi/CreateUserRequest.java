@@ -1,6 +1,5 @@
 package hi;
 
-
 public class CreateUserRequest {
 	
 	private String name;
@@ -13,13 +12,35 @@ public class CreateUserRequest {
 		this.job = job;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+	
 	public static String buildRequestBody(String name, String job) {
 		try {
 			CreateUserRequest request = new CreateUserRequest(name, job);
-			return Json.MAPPER.writeValueAsString(request);
+			String returnJson = Json.MAPPER.writeValueAsString(request);
+			return returnJson;
 			
 		} catch (Exception e) {
-			throw new RuntimeException("Ошибка сериализации CreateUserRequest:\n", e);
+			throw new RuntimeException(e);
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return "CreateUserRequest{name='" + name + "', job='" + job + "'}";
 	}
 }
